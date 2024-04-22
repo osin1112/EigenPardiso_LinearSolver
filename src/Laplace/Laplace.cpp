@@ -55,9 +55,7 @@ void Laplace::CalcStiffnessMatrix(int ic, tbb::concurrent_vector<Eigen::Triplet<
             
             double val = 0.0;
             for (int k = 0; k < 3; k++) {
-              for (int l = 0; l < 3; l++) {
-                val += dNdr(i, k) * dNdr(j, l);
-              }
+              val += dNdr(i, k) * dNdr(j, k);
             }
             val *= GQ.weight(i1) * GQ.weight(i2) * GQ.weight(i3) * dXdr.determinant();
 
