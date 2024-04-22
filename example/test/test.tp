@@ -1,0 +1,12 @@
+Computation {
+  NumOfGaussianNodes = 2
+  OpenMP_NumOfThreads = 24
+}
+
+Files {
+  NodeFile     = "node.dat"
+  ElemFile     = "element.dat"
+  TypeFile     = "type.dat"
+  ibpFile      = "ibp.dat"
+  bpFile       = "bp.dat"
+}

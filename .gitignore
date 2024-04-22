@@ -1,0 +1,4 @@
+.vscode
+*.vtu
+BUILD
+bin
