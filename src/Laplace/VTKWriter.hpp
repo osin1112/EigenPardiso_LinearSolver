@@ -1,7 +1,6 @@
 #ifndef __VTK_WRITER_HPP__
 #define __VTK_WRITER_HPP__
 
-#include "Geometry.hpp"
 #include "Laplace.hpp"
 #include "VTKCellType.hpp"
 #include <Eigen/Core>
@@ -22,17 +21,17 @@ using ResultEq = std::tuple<Eigen::MatrixXd, Eigen::MatrixXd,Eigen::MatrixXd,Eig
 class VTKWriter {
   public:
 
-    inline static void WriteResult(const std::string &filename, const Geometry &geo, const Eigen::VectorXd &p) noexcept {
+    inline static void WriteResult(const std::string &filename, const Laplace &La) noexcept {
       auto grid = vtkSmartPointer<vtkUnstructuredGrid>::New();
 
       auto points = vtkSmartPointer<vtkPoints>::New();
-      for (int i = 0; i < geo.NumOfNodes; i++) points->InsertNextPoint(geo.X(i, 0), geo.X(i, 1), geo.X(i, 2));
+      for (int i = 0; i < La.NumOfNodes; i++) points->InsertNextPoint(La.X(i, 0), La.X(i, 1), La.X(i, 2));
       grid->SetPoints(points);
     
-      for (int ic = 0; ic < geo.NumOfElems; ic++) {
-        if (geo.type(ic) == VTK_CellType::HEXAHEDRON) {
+      for (int ic = 0; ic < La.NumOfElems; ic++) {
+        if (La.type(ic) == VTK_CellType::HEXAHEDRON) {
           auto cell = vtkSmartPointer<vtkHexahedron>::New();
-          for (int i = 0; i < geo.element.row(ic).size(); i++) cell->GetPointIds()->SetId(i, geo.element(ic, i));
+          for (int i = 0; i < La.element.row(ic).size(); i++) cell->GetPointIds()->SetId(i, La.element(ic, i));
           grid->InsertNextCell(cell->GetCellType(), cell->GetPointIds());
         }
         else {
@@ -49,7 +48,7 @@ class VTKWriter {
           array->InsertNextValue(data(i));
         grid->GetPointData()->AddArray(array);
       };
-      SetPointData1D_double(p, "solution");
+      SetPointData1D_double(La.GetOutput(), "solution");
 
       auto writer = vtkSmartPointer<vtkXMLUnstructuredGridWriter>::New();
       writer->SetFileName(filename.c_str());

@@ -7,6 +7,7 @@
 class GaussianQuadrature {
   public:
     GaussianQuadrature(int NumOfGaussianNodes) {
+      this->NumOfGaussianNodes = NumOfGaussianNodes;
       node.resize(NumOfGaussianNodes);
       weight.resize(NumOfGaussianNodes);
       if(NumOfGaussianNodes == 1) {
@@ -25,6 +26,12 @@ class GaussianQuadrature {
       }
     }
 
+    inline const double GetNode(int i) { return node(i); }
+    inline const double GetWeight(int i) { return weight(i); }
+    inline const int GetNumOfGaussianNodes() { return NumOfGaussianNodes; }
+
+  private:
+    int NumOfGaussianNodes;
     Eigen::VectorXd node, weight;
 };
 

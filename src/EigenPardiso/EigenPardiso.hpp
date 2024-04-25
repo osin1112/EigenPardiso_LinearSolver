@@ -7,6 +7,7 @@
 #include <Eigen/PardisoSupport>
 #include <vector>
 #include <iostream>
+#include <tbb/concurrent_vector.h>
 
 class Eigen_Pardiso {
   public:
@@ -15,7 +16,7 @@ class Eigen_Pardiso {
       LHS.resize(dof, dof);
     }
 
-    inline void SetValues(std::vector<Eigen::Triplet<double>> &LHSvec, const Eigen::VectorXd &RHS) noexcept {
+    inline void SetValues(tbb::concurrent_vector<Eigen::Triplet<double>> &LHSvec, const Eigen::VectorXd &RHS) noexcept {
       this->LHS.setFromTriplets(LHSvec.begin(), LHSvec.end());
       this->RHS = RHS;
     }
