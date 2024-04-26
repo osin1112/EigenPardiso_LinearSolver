@@ -2,16 +2,6 @@
 #include "VTKCellType.hpp"
 #include <sstream>
 
-// #include <vtkSmartPointer.h>
-// #include <vtkUnstructuredGrid.h>
-// #include <vtkHexahedron.h>
-// #include <vtkTetra.h>
-// #include <vtkPoints.h>
-// #include <vtkPointData.h>
-// #include <vtkCellData.h>
-// #include <vtkFloatArray.h>
-// #include <vtkXMLUnstructuredGridWriter.h>
-
 void Geometry::ImportFromTP(const std::string path_to_tp) {
   TextParser tp;
   if(tp.read(path_to_tp) != TP_NO_ERROR) {

@@ -21,7 +21,7 @@ class Laplace : public Geometry {
 
   private:
     void CalcStiffnessMatrix(int ic, tbb::concurrent_vector<Eigen::Triplet<double>> &LHS) noexcept;
-    // void CalcRHS(int ic) noexcept;
+    void CalcRHS(int ic, Eigen::VectorXd &RHS) noexcept;
 
     Eigen::VectorXd Solution;
 };
